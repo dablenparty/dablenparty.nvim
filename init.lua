@@ -1,4 +1,4 @@
--- NOTE: from: https://github.com/nvim-tree/nvim-tree.lua
+-- NOTE: Disables netrw (default nvim file explorer)
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
@@ -242,18 +242,6 @@ require('lazy').setup({
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
       },
     },
-  },
-  -- File finder that replaces the default nvim UI for navigating directories
-  {
-    'nvim-tree/nvim-tree.lua',
-    dependencies = {
-      'nvim-tree/nvim-web-devicons',
-    },
-    version = '*',
-    lazy = false,
-    config = function()
-      require('nvim-tree').setup {}
-    end,
   },
 
   -- NOTE: Plugins can specify dependencies.
@@ -819,6 +807,10 @@ require('lazy').setup({
       -- - sd'   - [S]urround [D]elete [']quotes
       -- - sr)'  - [S]urround [R]eplace [)] [']
       require('mini.surround').setup()
+
+      -- Floating window file manager. Use hyphen to open it at any time
+      require('mini.files').setup()
+      vim.keymap.set('n', '-', MiniFiles.open, { desc = 'Open parent directory' })
 
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
