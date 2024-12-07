@@ -812,6 +812,9 @@ require('lazy').setup({
       require('mini.files').setup()
       vim.keymap.set('n', '-', MiniFiles.open, { desc = 'Open parent directory' })
 
+      -- Allows for moving selections with Alt (Meta) + hjkl
+      require('mini.move').setup()
+
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
       --  and try some other statusline plugin
