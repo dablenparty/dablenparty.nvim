@@ -181,6 +181,13 @@ return {
         decorations = {
           device = true,
         },
+        lsp = {
+          on_attach = function()
+            local telescope = require 'telescope'
+            pcall(telescope.load_extension, 'flutter')
+            vim.keymap.set('n', '<leader>sl', telescope.extensions.flutter.commands, { desc = '[S]earch F[l]utter Commands' })
+          end,
+        },
       }
     end,
   },
