@@ -29,6 +29,14 @@ return {
     --  - Normal mode: ?
     -- See `:help telescope` and `:help telescope.setup()`
     require('telescope').setup {
+      pickers = {
+        find_files = {
+          theme = 'ivy',
+        },
+        live_grep = {
+          theme = 'ivy',
+        },
+      },
       extensions = {
         ['ui-select'] = {
           require('telescope.themes').get_dropdown(),
