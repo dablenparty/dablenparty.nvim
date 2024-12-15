@@ -36,9 +36,6 @@ return {
         live_grep = {
           theme = 'ivy',
         },
-        current_buffer_fuzzy_find = {
-          theme = 'ivy',
-        },
       },
       extensions = {
         ['ui-select'] = {
@@ -53,7 +50,6 @@ return {
 
     -- See `:help telescope.builtin`
     local builtin = require 'telescope.builtin'
-    vim.keymap.set('n', '<leader>s%', builtin.current_buffer_fuzzy_find, { desc = 'Fuzzy [s]earch current buffer' })
     vim.keymap.set('n', '<leader>sc', builtin.colorscheme, { desc = '[S]earch [C]olorschemes' })
     vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
     vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
@@ -70,7 +66,7 @@ return {
     -- Slightly advanced example of overriding default behavior and theme
     vim.keymap.set('n', '<leader>/', function()
       -- You can pass additional configuration to Telescope to change the theme, layout, etc.
-      builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+      builtin.current_buffer_fuzzy_find(require('telescope.themes').get_ivy {
         winblend = 10,
         previewer = false,
       })
