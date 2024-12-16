@@ -130,7 +130,7 @@ return {
       -- See `:help lspconfig-all` for a list of all the pre-configured LSPs
       local servers = {
         basedpyright = {},
-        bashls = {},
+        bashls = { filetypes = { 'sh', 'zsh' } },
         lua_ls = {
           -- other keys
           -- cmd = {...},
@@ -206,6 +206,9 @@ return {
         desc = '[F]ormat buffer',
       },
     },
+    init = function()
+      vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+    end,
     opts = {
       notify_on_error = false,
       format_on_save = function(bufnr)
@@ -231,6 +234,14 @@ return {
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         -- javascript = { "prettierd", "prettier", stop_after_first = true },
+        rust = { 'rustfmt' },
+        sh = { 'shfmt' },
+        zsh = { 'shfmt' },
+      },
+      formatters = {
+        shfmt = {
+          prepend_args = { '-i', '2' },
+        },
       },
     },
   },
