@@ -18,14 +18,26 @@ return { -- Collection of various small independent plugins/modules
 
     -- Floating window file manager. Use hyphen to open it at any time
     local mini_files = require 'mini.files'
-    local width_preview_max = 80
-    local width_preview_min = 40
-    local width_preview_want = math.floor(vim.api.nvim_win_get_width(0) / 3)
-    local preview_config = {}
-    if width_preview_want >= width_preview_min then
-      preview_config = { preview = true, width_preview = math.max(width_preview_want, width_preview_max) }
+    local make_mini_preview_config = function(window_id)
+      window_id = window_id or 0
+      local width_preview_max = 80
+      local width_preview_min = 40
+      local width_preview_want = math.floor(vim.api.nvim_win_get_width(window_id) / 3)
+      local preview_config = {}
+      if width_preview_want >= width_preview_min then
+        preview_config = { preview = true, width_preview = math.min(width_preview_want, width_preview_max) }
+      end
+      return preview_config
     end
-    mini_files.setup { windows = preview_config }
+    mini_files.setup { windows = make_mini_preview_config() }
+    vim.api.nvim_create_autocmd('MiniFilesWindowOpen', {
+      desc = 'Determine if preview window should show',
+      group = vim.api.nvim_create_augroup('custom-mini-files-open', { clear = true }),
+      callback = function(ev)
+        local preview_config = make_mini_preview_config(ev.data.win_id)
+        mini_files.refresh { window = preview_config }
+      end,
+    })
     vim.keymap.set('n', '-', mini_files.open, { desc = 'Open parent directory' })
 
     -- FIXME: doesn't work on macOS
