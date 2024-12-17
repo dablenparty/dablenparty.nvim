@@ -18,9 +18,17 @@ return { -- Collection of various small independent plugins/modules
 
     -- Floating window file manager. Use hyphen to open it at any time
     local mini_files = require 'mini.files'
-    mini_files.setup()
+    local width_preview_max = 80
+    local width_preview_min = 40
+    local width_preview_want = math.floor(vim.api.nvim_win_get_width(0) / 3)
+    local preview_config = {}
+    if width_preview_want >= width_preview_min then
+      preview_config = { preview = true, width_preview = math.max(width_preview_want, width_preview_max) }
+    end
+    mini_files.setup { windows = preview_config }
     vim.keymap.set('n', '-', mini_files.open, { desc = 'Open parent directory' })
 
+    -- FIXME: doesn't work on macOS
     -- Allows for moving selections with Alt (Meta) + hjkl
     require('mini.move').setup()
 
