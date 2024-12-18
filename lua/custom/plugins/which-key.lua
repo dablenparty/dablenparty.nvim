@@ -1,7 +1,7 @@
 -- Useful plugin to show you pending keybinds.
 return {
   'folke/which-key.nvim',
-  event = 'VeryLazy', -- Sets the loading event to 'VimEnter'
+  event = 'VeryLazy',
   keys = {
     {
       '<leader>?',
@@ -12,6 +12,7 @@ return {
     },
   },
   opts = {
+    preset = 'modern',
     icons = {
       -- set icon mappings to true if you have a Nerd Font
       mappings = vim.g.have_nerd_font,
