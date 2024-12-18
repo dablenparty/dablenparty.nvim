@@ -24,9 +24,10 @@ return {
     { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
   },
   config = function()
+    local telescope = require 'telescope'
     -- Enable Telescope extensions if they are installed
-    pcall(require('telescope').load_extension, 'fzf')
-    pcall(require('telescope').load_extension, 'ui-select')
+    pcall(telescope.load_extension, 'fzf')
+    pcall(telescope.load_extension, 'ui-select')
 
     -- See `:help telescope.builtin`
     local builtin = require 'telescope.builtin'
@@ -34,7 +35,7 @@ return {
     --  - Insert mode: <c-/>
     --  - Normal mode: ?
     -- See `:help telescope` and `:help telescope.setup()`
-    require('telescope').setup {
+    telescope.setup {
       pickers = {
         find_files = {
           theme = 'ivy',
