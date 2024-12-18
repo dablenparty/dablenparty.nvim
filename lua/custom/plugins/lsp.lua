@@ -173,24 +173,19 @@ return {
   {
     'nvim-flutter/flutter-tools.nvim',
     lazy = false,
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'stevearc/dressing.nvim', -- optional for vim.ui.select
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    opts = {
+      decorations = {
+        device = true,
+      },
+      lsp = {
+        on_attach = function()
+          local telescope = require 'telescope'
+          pcall(telescope.load_extension, 'flutter')
+          vim.keymap.set('n', '<leader>sl', telescope.extensions.flutter.commands, { desc = '[S]earch F[l]utter Commands' })
+        end,
+      },
     },
-    config = function()
-      require('flutter-tools').setup {
-        decorations = {
-          device = true,
-        },
-        lsp = {
-          on_attach = function()
-            local telescope = require 'telescope'
-            pcall(telescope.load_extension, 'flutter')
-            vim.keymap.set('n', '<leader>sl', telescope.extensions.flutter.commands, { desc = '[S]earch F[l]utter Commands' })
-          end,
-        },
-      }
-    end,
   },
   { -- Autoformat
     'stevearc/conform.nvim',
