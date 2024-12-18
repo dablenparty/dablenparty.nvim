@@ -10,33 +10,30 @@ There is also the [nightly](https://github.com/neovim/neovim/releases/tag/nightl
 ### Install External Dependencies
 
 External Requirements:
+- Package manager
+  - macOS/Linux: [Homebrew](https://brew.sh/)
+  - Windows: `winget` and Chocolatey ([see below](#windows-installation))
 - Basic utils: `git`, `make`, `unzip`, C Compiler (`gcc`)
 - [ripgrep](https://github.com/BurntSushi/ripgrep#installation)
 - Clipboard tool (xclip/xsel/win32yank or other depending on platform)
-- A [Nerd Font](https://www.nerdfonts.com/)
-- NodeJS and NPM
-  - Needed for most language servers
-  - Use a version manager like [fnm](https://github.com/Schniz/fnm)
+  - needed to sync clipboard with neovim
+- A [Nerd Font](https://www.nerdfonts.com/) (I currently use [JetBrains Mono](https://www.programmingfonts.org/#jetbrainsmono))
+- NodeJS and NPM (use a version manager like [fnm](https://github.com/Schniz/fnm))
+  - Although very few of them actually specify this, NPM is needed to install most language servers
 
-### Install Recipes
-
-Below you can find OS specific install instructions for Neovim and dependencies.
-
-#### Windows Installation
+### Windows Installation
 
 <details><summary>Windows with gcc/make using chocolatey</summary>
-One can install gcc and make which won't require changing the config,
-the easiest way is to use choco:
 
-1. install [chocolatey](https://chocolatey.org/install)
-either follow the instructions on the page or use winget,
-run in cmd as **admin**:
+Choosing to use `gcc` and `make` *won't require changing the config* to work on Windows.
+The easiest way is to use `choco`:
+
+1. install [chocolatey](https://chocolatey.org/install); either follow the instructions on the page or use `winget` as **admin**:
 ```
 winget install --accept-source-agreements chocolatey.chocolatey
 ```
 
-2. install all requirements using choco, exit previous cmd and
-open a new one so that choco path is set, and run in cmd as **admin**:
+2. install all requirements using `choco`, exit previous terminal and open a new one so that `choco` path is set, and run the following as **admin**:
 ```
 choco install -y neovim git ripgrep wget fd unzip gzip mingw make
 ```
