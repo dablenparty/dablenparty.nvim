@@ -161,7 +161,7 @@ require('lazy').setup({
   -- Same as above, but for themes.
   {
     import = 'custom.themes',
-    config = function()
+    init = function()
       -- Set the current default colorscheme (make sure this isn't called somewhere else too!)
       vim.cmd [[colorscheme everforest]]
     end,
