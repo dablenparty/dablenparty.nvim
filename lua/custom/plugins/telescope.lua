@@ -29,6 +29,16 @@ return {
     pcall(telescope.load_extension, 'fzf')
     pcall(telescope.load_extension, 'ui-select')
 
+    local telescope_vimgrep_opts = { unpack(require('telescope.config').values.vimgrep_arguments) }
+    vim.list_extend(telescope_vimgrep_opts, {
+      '--hidden',
+      '--glob',
+      -- submodules use .git file
+      '!**/.git',
+      '--glob',
+      -- normal git repos use .git/ dir
+      '!**/.git/*',
+    })
     -- See `:help telescope.builtin`
     local builtin = require 'telescope.builtin'
     -- Two important keymaps to use while in Telescope are:
@@ -36,12 +46,14 @@ return {
     --  - Normal mode: ?
     -- See `:help telescope` and `:help telescope.setup()`
     telescope.setup {
+      defaults = {
+        vimgrep_arguments = telescope_vimgrep_opts,
+      },
       pickers = {
         find_files = {
           theme = 'ivy',
           find_command = {
             'rg',
-            '--mmap',
             '--color=never',
             '--files',
             '--follow',
