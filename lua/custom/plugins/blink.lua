@@ -43,10 +43,10 @@ return {
     },
     sources = {
       default = { 'lsp', 'path', 'luasnip', 'buffer', 'dadbod' },
+      providers = {
+        dadbod = { name = 'Dadbod', module = 'vim_dadbod_completion.blink' },
+      },
     },
-  },
-  providers = {
-    dadbod = { name = 'Dadbod', module = 'vim_dadbod_completion.blink' },
   },
   -- allows extending the providers array elsewhere in your config
   -- without having to redefine it
