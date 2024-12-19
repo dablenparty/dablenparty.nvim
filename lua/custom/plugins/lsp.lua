@@ -21,6 +21,8 @@ return {
 
       -- Useful status update notifications for LSP.
       { 'j-hui/fidget.nvim', opts = {} },
+
+      'saghen/blink.cmp',
     },
     config = function()
       vim.api.nvim_create_autocmd('LspAttach', {
@@ -163,6 +165,7 @@ return {
         handlers = {
           function(server_name)
             local server = servers[server_name] or {}
+            server.capabilities = require('blink.cmp').get_lsp_capabilities(server.capabilities)
             require('lspconfig')[server_name].setup(server)
           end,
         },
@@ -265,14 +268,6 @@ return {
           },
         },
       },
-      -- TODO: switch to blink
-      'saadparwaiz1/cmp_luasnip',
-
-      -- Adds other completion capabilities.
-      --  nvim-cmp does not ship with all sources by default. They are split
-      --  into multiple repos for maintenance purposes.
-      'hrsh7th/cmp-nvim-lsp',
-      'hrsh7th/cmp-path',
     },
     config = function()
       -- See `:help cmp`
