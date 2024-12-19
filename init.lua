@@ -160,13 +160,7 @@ require('lazy').setup({
   -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec` (or use telescope)
   { import = 'custom.plugins' },
   -- Same as above, but for themes.
-  {
-    import = 'custom.themes',
-    init = function()
-      -- Set the current default colorscheme (make sure this isn't called somewhere else too!)
-      vim.cmd [[colorscheme everforest]]
-    end,
-  },
+  { import = 'custom.themes' },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
@@ -188,3 +182,6 @@ require('lazy').setup({
     },
   },
 })
+
+-- Set the current default colorscheme (make sure this isn't called somewhere else too!)
+vim.cmd [[colorscheme tokyonight-night]]
