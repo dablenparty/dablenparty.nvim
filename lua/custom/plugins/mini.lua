@@ -14,10 +14,10 @@ return {
   {
     'echasnovski/mini.statusline',
     version = '*',
-    opts = {
-      use_icons = vim.g.have_nerd_font,
-    },
     config = function()
+      require('mini.statusline').setup {
+        use_icons = vim.g.have_nerd_font,
+      }
       -- You can configure sections in the statusline by overriding their
       -- default behavior. For example, here we set the section for
       -- cursor location to LINE:COLUMN
