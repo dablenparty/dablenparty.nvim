@@ -16,11 +16,6 @@ return { -- Collection of various small independent plugins/modules
     -- - sr)'  - [S]urround [R]eplace [)] [']
     require('mini.surround').setup()
 
-    -- Floating window file manager. Use hyphen to open it at any time
-    local mini_files = require 'mini.files'
-    mini_files.setup()
-    vim.keymap.set('n', '-', mini_files.open, { desc = 'Open parent directory' })
-
     -- Allows for moving selections with Alt (Meta) + hjkl
     require('mini.move').setup()
 
