@@ -4,6 +4,7 @@ return {
   event = 'VimEnter',
   branch = '0.1.x',
   dependencies = {
+    'nvim-telescope/telescope-ui-select.nvim',
     'nvim-lua/plenary.nvim',
     { -- If encountering errors, see telescope-fzf-native README for installation instructions
       'nvim-telescope/telescope-fzf-native.nvim',
@@ -24,8 +25,6 @@ return {
   },
   config = function()
     local telescope = require 'telescope'
-    -- Enable Telescope extensions if they are installed
-    pcall(telescope.load_extension, 'fzf')
 
     local telescope_vimgrep_opts = { unpack(require('telescope.config').values.vimgrep_arguments) }
     vim.list_extend(telescope_vimgrep_opts, {
@@ -73,7 +72,16 @@ return {
           theme = 'ivy',
         },
       },
+      extensions = {
+        ['ui-select'] = {
+          require('telescope.themes').get_dropdown(),
+        },
+      },
     }
+
+    -- Enable Telescope extensions if they are installed
+    pcall(telescope.load_extension, 'fzf')
+    pcall(telescope.load_extension, 'ui-select')
 
     vim.keymap.set('n', '<leader>sc', builtin.colorscheme, { desc = '[S]earch [C]olorschemes' })
     vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
