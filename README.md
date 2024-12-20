@@ -23,7 +23,7 @@ External Requirements:
 
 ### Windows Installation
 
-<details><summary>Windows with gcc/make using chocolatey</summary>
+#### Windows with gcc/make using chocolatey
 
 Choosing to use `gcc` and `make` *won't require changing the config* to work on Windows.
 The easiest way is to use `choco`:
@@ -37,12 +37,19 @@ winget install --accept-source-agreements chocolatey.chocolatey
 ```
 choco install -y neovim git ripgrep wget fd unzip gzip mingw make
 ```
-</details>
-<details><summary>WSL (Windows Subsystem for Linux)</summary>
 
-```
+#### WSL (Windows Subsystem for Linux)
+
+First, install WSL2 in an **admin** PowerShell
+
+```powershell
 wsl --install
 wsl
+```
+
+Then, in WSL, install everything
+
+```bash
 sudo add-apt-repository ppa:neovim-ppa/unstable -y
 sudo apt update
 sudo apt install make gcc ripgrep unzip git xclip neovim
