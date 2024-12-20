@@ -51,17 +51,12 @@ return {
         find_files = {
           theme = 'ivy',
           find_command = {
-            'rg',
+            'fd',
             '--color=never',
-            '--files',
             '--follow',
             '--hidden',
-            '--glob',
-            -- submodules use .git file
-            '!**/.git',
-            '--glob',
-            -- normal git repos use .git/ dir
-            '!**/.git/*',
+            '--exclude',
+            '.git',
           },
         },
         live_grep = {
