@@ -5,7 +5,7 @@ return {
   opts = {
     default_integrations = false,
     integrations = {
-      cmp = true,
+      blink = true,
       mason = true,
       treesitter = true,
       mini = { enabled = true, indentscope_color = 'lavender' },
