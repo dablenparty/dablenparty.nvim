@@ -37,6 +37,7 @@ return {
       -- normal git repos use .git/ dir
       '!**/.git/*',
     })
+    local open_with_trouble = require('trouble.sources.telescope').open
     -- See `:help telescope.builtin`
     local builtin = require 'telescope.builtin'
     -- Two important keymaps to use while in Telescope are:
@@ -46,6 +47,15 @@ return {
     telescope.setup {
       defaults = {
         vimgrep_arguments = telescope_vimgrep_opts,
+        mappings = {
+          i = { ['<c-t>'] = open_with_trouble },
+          n = { ['<c-t>'] = open_with_trouble },
+        },
+      },
+      modes = {
+        lsp = {
+          win = { position = 'right' },
+        },
       },
       pickers = {
         find_files = {
