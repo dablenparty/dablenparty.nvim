@@ -7,6 +7,17 @@ return {
     },
   },
   {
+    'echasnovski/mini.pairs',
+    event = 'VeryLazy',
+    opts = {
+      modes = { insert = true, command = true, terminal = true },
+      mappings = {
+        ['<'] = { action = 'open', pair = '<>', neigh_pattern = '[^\\].' },
+        ['>'] = { action = 'close', pair = '<>', neigh_pattern = '[^\\].' },
+      },
+    },
+  },
+  {
     'echasnovski/mini.surround',
     version = '*',
     opts = {},
