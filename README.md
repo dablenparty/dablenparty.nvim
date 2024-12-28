@@ -4,8 +4,9 @@
 
 ### Install Neovim
 
-I recommend installing from [Homebrew](https://brew.sh/), it usually has the most recent [stable](https://github.com/neovim/neovim/releases/tag/stable) version.
-There is also the [nightly](https://github.com/neovim/neovim/releases/tag/nightly) version.
+I recommend installing from [Homebrew](https://brew.sh/), it usually has the most recent [stable](https://github.com/neovim/neovim/releases/tag/stable) version. There is also the [nightly](https://github.com/neovim/neovim/releases/tag/nightly) version.
+
+`pacman` will also work in place of Homebrew.
 
 ### Install External Dependencies
 
@@ -13,14 +14,15 @@ There is also the [nightly](https://github.com/neovim/neovim/releases/tag/nightl
 > Before you install anything, make sure you have a [Nerd Font](https://www.nerdfonts.com/). At the time of writing, I use [JetBrains Mono](https://www.programmingfonts.org/#jetbrainsmono).
 
 #### Package Managers
-- macOS/Linux: [Homebrew](https://brew.sh/)
+- macOS/Linux: [Homebrew](https://brew.sh/) or `pacman`
 - Windows: `winget` and Chocolatey ([see below](#native-windows-installation))
 
 #### Command Line Utilities
 
 - Basic utils: `git`, `unzip`
 - Clipboard tool (xclip/xsel/win32yank or other depending on platform)
-  - Used to sync clipboard with neovim
+  - Used to sync clipbord with neovim
+  - [Wayland needs `wl-clipboard`](https://wiki.archlinux.org/title/Neovim)
 - CMake (`make`)
 - [`fd`](https://github.com/sharkdp/fd)
   - Install with **Homebrew**
@@ -34,7 +36,6 @@ There is also the [nightly](https://github.com/neovim/neovim/releases/tag/nightl
 - [`rustup`](https://rustup.rs/) with nightly toolchain
   - `rustup toolchain install nightly`
   - For building [`blink.cmp`](lua/custom/plugins/blink.lua) from source
-
 
 ### Native Windows Installation
 
