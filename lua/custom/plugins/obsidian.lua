@@ -11,6 +11,8 @@ return {
     'nvim-lua/plenary.nvim',
   },
   opts = {
+    -- ui handled by render-markdown
+    ui = { enable = false },
     workspaces = {
       -- my default vault location
       {
@@ -19,7 +21,7 @@ return {
       },
     },
   },
-  init = function()
-    vim.o.conceallevel = 2
-  end,
+  -- init = function()
+  --   vim.o.conceallevel = 2
+  -- end,
 }

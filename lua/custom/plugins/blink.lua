@@ -49,9 +49,10 @@ return {
       end,
     },
     sources = {
-      default = { 'lsp', 'path', 'luasnip', 'buffer', 'dadbod' },
+      default = { 'lsp', 'path', 'luasnip', 'buffer', 'dadbod', 'markdown' },
       providers = {
         dadbod = { name = 'Dadbod', module = 'vim_dadbod_completion.blink' },
+        markdown = { name = 'RenderMarkdown', module = 'render-markdown.integ.blink' },
       },
     },
   },
