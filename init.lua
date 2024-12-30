@@ -80,8 +80,26 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
-vim.keymap.set('n', '<C-Q>',function() vim.cmd [[cnext]] end, { desc = 'Next [Q]uickfix Item' })
-vim.keymap.set('n', '<C-E>',function() vim.cmd [[cprev]] end, { desc = 'Pr[e]vious Quickfix Item' })
+vim.keymap.set('n', '<C-Q>', function()
+  local ok, result = pcall(vim.cmd, 'cnext')
+  if ok then
+    return
+  end
+  -- wrap to start on error
+  if string.find(result, 'E553') then
+    vim.cmd [[cc 1]]
+  end
+end, { desc = 'Next [Q]uickfix Item' })
+vim.keymap.set('n', '<C-E>', function()
+  local ok, result = pcall(vim.cmd, 'cprev')
+  if ok then
+    return
+  end
+  -- wrap to end on error
+  if string.find(result, 'E553') then
+    vim.cmd [[cc $]]
+  end
+end, { desc = 'Pr[e]vious Quickfix Item' })
 
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
