@@ -25,6 +25,11 @@ return {
       'saghen/blink.cmp',
     },
     opts = {
+      setup = {
+        rust_analyzer = function()
+          return true
+        end,
+      },
       diagnostics = {
         underline = true,
         update_in_insert = false,
@@ -39,7 +44,8 @@ return {
         severity_sort = true,
       },
     },
-    config = function()
+    config = function(_, opts)
+      opts = opts or {}
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
         callback = function(event)
@@ -162,7 +168,6 @@ return {
           },
         },
         marksman = {},
-        rust_analyzer = {},
       }
       local formatters = { 'prettier', 'shfmt', 'stylua' }
       local linters = { 'markdownlint-cli2', 'shellcheck' }
@@ -179,6 +184,7 @@ return {
         automatic_installation = true,
         ensure_installed = {}, -- Handled by mason-tool-installer above
         handlers = {
+          ['rust_analyzer'] = function() end,
           function(server_name)
             local server = servers[server_name] or {}
             server.capabilities = require('blink.cmp').get_lsp_capabilities(server.capabilities)
@@ -224,7 +230,7 @@ return {
       vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
     end,
     opts = {
-      notify_on_error = false,
+      notify_on_error = true,
       format_on_save = function(bufnr)
         -- Disable "format_on_save lsp_fallback" for languages that don't
         -- have a well standardized coding style. You can add additional
