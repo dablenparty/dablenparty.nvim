@@ -110,22 +110,6 @@ return {
       desc = 'which_key_ignore',
     },
     {
-      ']]',
-      function()
-        Snacks.words.jump(vim.v.count1)
-      end,
-      desc = 'Next Reference',
-      mode = { 'n', 't' },
-    },
-    {
-      '[[',
-      function()
-        Snacks.words.jump(-vim.v.count1)
-      end,
-      desc = 'Prev Reference',
-      mode = { 'n', 't' },
-    },
-    {
       '<leader>N',
       desc = 'Neovim News',
       function()
@@ -149,9 +133,9 @@ return {
       pattern = 'VeryLazy',
       callback = function()
         -- Setup some globals for debugging (lazy-loaded)
-        _G.dd = function(...)
-          Snacks.debug.inspect(...)
-        end
+        -- _G.dd = function(...)
+        --   Snacks.debug.inspect(...)
+        -- end
         _G.bt = function()
           Snacks.debug.backtrace()
         end
