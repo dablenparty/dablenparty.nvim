@@ -161,10 +161,11 @@ return {
             },
           },
         },
+        marksman = {},
         rust_analyzer = {},
       }
-      local formatters = { 'shfmt', 'stylua' }
-      local linters = { 'shellcheck' }
+      local formatters = { 'prettier', 'shfmt', 'stylua' }
+      local linters = { 'markdownlint-cli2', 'shellcheck' }
       -- You can add other tools here that you want Mason to install
       -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
@@ -242,6 +243,8 @@ return {
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
+        markdown = { 'prettier', 'markdownlint-cli2', 'markdown-toc' },
+        ['markdown.mdx'] = { 'prettier', 'markdownlint-cli2', 'markdown-toc' },
         -- Conform can also run multiple formatters sequentially
         python = { 'isort', 'black' },
         --
@@ -252,6 +255,23 @@ return {
         zsh = { 'shfmt' },
       },
       formatters = {
+        ['markdown-toc'] = {
+          condition = function(_, ctx)
+            for _, line in ipairs(vim.api.nvim_buf_get_lines(ctx.buf, 0, -1, false)) do
+              if line:find '<!%-%- toc %-%->' then
+                return true
+              end
+            end
+          end,
+        },
+        ['markdownlint-cli2'] = {
+          condition = function(_, ctx)
+            local diag = vim.tbl_filter(function(d)
+              return d.source == 'markdownlint'
+            end, vim.diagnostic.get(ctx.buf))
+            return #diag > 0
+          end,
+        },
         shfmt = {
           prepend_args = { '-i', '2' },
         },
