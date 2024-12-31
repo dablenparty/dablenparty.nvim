@@ -15,6 +15,10 @@ return {
         require('luasnip.loaders.from_vscode').lazy_load()
       end,
     },
+    {
+      'saghen/blink.compat',
+      lazy = true,
+    },
   },
 
   build = 'cargo +nightly build --release',
@@ -53,6 +57,18 @@ return {
       providers = {
         dadbod = { name = 'Dadbod', module = 'vim_dadbod_completion.blink' },
         markdown = { name = 'RenderMarkdown', module = 'render-markdown.integ.blink' },
+        obsidian = {
+          name = 'obsidian',
+          module = 'blink.compat.source',
+        },
+        obsidian_new = {
+          name = 'obsidian_new',
+          module = 'blink.compat.source',
+        },
+        obsidian_tags = {
+          name = 'obsidian_tags',
+          module = 'blink.compat.source',
+        },
       },
     },
   },

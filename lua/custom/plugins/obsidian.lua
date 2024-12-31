@@ -13,6 +13,10 @@ return {
   opts = {
     -- ui handled by render-markdown
     ui = { enable = false },
+    completion = {
+      -- NOTE: this must be disabled here to enable blink.compat
+      nvim_cmp = false,
+    },
     workspaces = {
       -- my default vault location
       {
