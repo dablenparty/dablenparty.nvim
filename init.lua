@@ -146,20 +146,22 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
--- NOTE: Here is where you install your plugins.
-require('lazy').setup({
-  -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
-  'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
+-- NOTE: For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec` (or use telescope)
+require('lazy').setup {
+  spec = {
+    -- Detect tabstop and shiftwidth automatically
+    'tpope/vim-sleuth',
 
-  -- Highlight todo, notes, etc in comments
-  { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
+    -- Highlight todo, notes, etc in comments
+    { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
-  -- NOTE: For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec` (or use telescope)
-  { import = 'plugins' },
-  -- Same as above, but for themes.
-  { import = 'themes' },
-}, {
+    { import = 'plugins' },
+    -- Same as above, but for themes.
+    { import = 'themes' },
+  },
   ui = {
+    border = 'rounded',
+    title = 'Lazy Plugin Manager',
     -- If you are using a Nerd Font: set icons to an empty table which will use the
     -- default lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table
     icons = vim.g.have_nerd_font and {} or {
@@ -178,7 +180,7 @@ require('lazy').setup({
       lazy = '💤 ',
     },
   },
-})
+}
 
 -- Set the current default colorscheme (make sure this isn't called somewhere else too!)
 vim.cmd [[colorscheme tokyonight-night]]
