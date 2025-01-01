@@ -39,12 +39,18 @@ return {
         if require('trouble').is_open() then
           require('trouble').prev { skip_groups = true, jump = true }
           vim.diagnostic.open_float()
-        elseif vim.diagnostic.is_enabled() then
+        elseif vim.diagnostic.is_enabled() and vim.diagnostic.get_prev() ~= nil then
           vim.diagnostic.goto_prev { float = true }
         else
           local ok, err = pcall(vim.cmd.cprev)
-          if not ok then
-            vim.notify(err, vim.log.levels.ERROR)
+          if ok then
+            return
+          end
+          -- wrap to end on "no more items" error
+          if string.find(err, 'E553') then
+            vim.cmd [[clast]]
+          else
+            vim.notify(err, vim.log.levels.WARN)
           end
         end
       end,
@@ -56,12 +62,18 @@ return {
         if require('trouble').is_open() then
           require('trouble').next { skip_groups = true, jump = true }
           vim.diagnostic.open_float()
-        elseif vim.diagnostic.is_enabled() then
+        elseif vim.diagnostic.is_enabled() and vim.diagnostic.get_next() ~= nil then
           vim.diagnostic.goto_next { float = true }
         else
           local ok, err = pcall(vim.cmd.cnext)
-          if not ok then
-            vim.notify(err, vim.log.levels.ERROR)
+          if ok then
+            return
+          end
+          -- wrap to start on "no more items" error
+          if string.find(err, 'E553') then
+            vim.cmd [[cfirst]]
+          else
+            vim.notify(err, vim.log.levels.WARN)
           end
         end
       end,

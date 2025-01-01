@@ -82,7 +82,7 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 -- TODO: fix these keymaps to use Trouble, then fallback to vim.diagnostic, then fallback to cnext/cprev, then display error
 vim.keymap.set('n', ']]', function()
-  local ok, result = pcall(vim.cmd, 'cnext')
+  local ok, result = pcall(vim.cmd.cnext)
   if ok then
     return
   end
@@ -92,7 +92,7 @@ vim.keymap.set('n', ']]', function()
   end
 end, { desc = 'Next [Q]uickfix Item' })
 vim.keymap.set('n', '[[', function()
-  local ok, result = pcall(vim.cmd, 'cprev')
+  local ok, result = pcall(vim.cmd.cprev)
   if ok then
     return
   end
