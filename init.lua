@@ -154,12 +154,10 @@ require('lazy').setup({
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
-  -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
-  -- This is the easiest way to modularize your config.
-  -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec` (or use telescope)
-  { import = 'custom.plugins' },
+  -- NOTE: For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec` (or use telescope)
+  { import = 'plugins' },
   -- Same as above, but for themes.
-  { import = 'custom.themes' },
+  { import = 'themes' },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
