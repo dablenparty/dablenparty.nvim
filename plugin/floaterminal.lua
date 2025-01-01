@@ -43,8 +43,11 @@ local function toggle_terminal()
   if not vim.api.nvim_win_is_valid(win_state.floating.win) then
     win_state.floating = create_floating_window { buf = win_state.floating.buf }
     if vim.bo[win_state.floating.buf].buftype ~= 'terminal' then
-      vim.cmd.terminal()
+      vim.cmd [[terminal]]
     end
+    vim.schedule(function()
+      vim.cmd [[startinsert]]
+    end)
   else
     vim.api.nvim_win_hide(win_state.floating.win)
   end
