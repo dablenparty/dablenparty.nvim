@@ -1,10 +1,15 @@
+---@alias floaterminal.OpenTermState { buf: number, win: number }
+---@alias floaterminal.State { most_recent_buf: number, all_bufs: [number], win: number }
+
+---@type floaterminal.State
 local win_state = {
-  floating = {
-    buf = -1,
-    win = -1,
-  },
+  most_recent_buf = -1,
+  all_bufs = {},
+  win = -1,
 }
 
+---@param opts { buf: number, height?: number, width?: number }
+---@return floaterminal.OpenTermState
 local function create_floating_window(opts)
   opts = opts or {}
   local scale_factor = 0.8
@@ -38,20 +43,3 @@ local function create_floating_window(opts)
 
   return { buf = buf, win = window }
 end
-
-local function toggle_terminal()
-  if not vim.api.nvim_win_is_valid(win_state.floating.win) then
-    win_state.floating = create_floating_window { buf = win_state.floating.buf }
-    if vim.bo[win_state.floating.buf].buftype ~= 'terminal' then
-      vim.cmd [[terminal]]
-    end
-    vim.schedule(function()
-      vim.cmd [[startinsert]]
-    end)
-  else
-    vim.api.nvim_win_hide(win_state.floating.win)
-  end
-end
-
-vim.api.nvim_create_user_command('Floaterminal', toggle_terminal, {})
-vim.keymap.set({ 'n', 't' }, '<localleader>tt', toggle_terminal, { desc = '[T]oggle Floa[t]erminal' })
