@@ -1,3 +1,4 @@
+---@diagnostic disable: lowercase-global
 ---@alias floaterminal.FloatingWinState { buf: number, win: number }
 ---@alias floaterminal.State { most_recent_buf: number, ft_bufs: [number], floating: floaterminal.FloatingWinState }
 
@@ -13,7 +14,7 @@ local ft_state = {
 
 ---@param opts? { buf: number, height?: number, width?: number }
 ---@return floaterminal.OpenTermState
-local function create_floating_window(opts)
+function create_floating_window(opts)
   opts = opts or {}
 
   local scale_factor = 0.8
@@ -49,8 +50,8 @@ local function create_floating_window(opts)
   return { buf = win_buf, win = window }
 end
 
----@param win_buf? number Optional buffer to attach to the window
-local function toggle_terminal(win_buf)
+---@param win_buf? number Optional buffer to attach to the window. If one is not provided, a new buffer is created.
+function toggle_terminal(win_buf)
   win_buf = win_buf or -1
   if not vim.api.nvim_win_is_valid(ft_state.floating.win) then
     ft_state.floating = create_floating_window { buf = win_buf }
@@ -67,7 +68,7 @@ local function toggle_terminal(win_buf)
   end
 end
 
-local function toggle_recent_terminal()
+function toggle_recent_terminal()
   if vim.api.nvim_buf_is_valid(ft_state.most_recent_buf) then
     toggle_terminal(ft_state.most_recent_buf)
   else
