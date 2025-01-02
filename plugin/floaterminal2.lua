@@ -19,6 +19,7 @@ function create_new_buffer()
   return buf
 end
 
+---Creates a minimal floating window relative to the editor from the provided options.
 ---@param opts? { buf: number, height?: number, width?: number }
 ---@return floaterminal.OpenTermState state
 function create_floating_window(opts)
@@ -56,6 +57,8 @@ function create_floating_window(opts)
   return { buf = win_buf, win = window }
 end
 
+---Toggles the Floaterminal window, displaying the proivided buffer. If the buffer is not yet a terminal, it is
+---made into one.
 ---@param win_buf? number Optional buffer to attach to the window. If one is not provided, a new buffer is created.
 function toggle_terminal(win_buf)
   win_buf = win_buf or -1
@@ -74,12 +77,10 @@ function toggle_terminal(win_buf)
   end
 end
 
+---Toggles the Floaterminal window with the most recently used terminal buffer. If no buffer exists, it is
+---created.
 function toggle_recent_terminal()
-  if vim.api.nvim_buf_is_valid(ft_state.most_recent_buf) then
-    toggle_terminal(ft_state.most_recent_buf)
-  else
-    vim.notify('No recent Floaterminal found', vim.log.levels.WARN, {})
-  end
+  toggle_terminal(ft_state.most_recent_buf)
 end
 
 vim.api.nvim_create_user_command('FloaterminalList', function(_)
