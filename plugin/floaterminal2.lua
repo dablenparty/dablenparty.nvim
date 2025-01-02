@@ -83,10 +83,58 @@ function toggle_recent_terminal()
   toggle_terminal(ft_state.most_recent_buf)
 end
 
+function toggle_from_telescope(opts)
+  opts = opts or {}
+
+  local actions = require 'telescope.actions'
+  local action_state = require 'telescope.actions.state'
+  local pickers = require 'telescope.pickers'
+  local finders = require 'telescope.finders'
+  local conf = require('telescope.config').values
+  local theme = require('telescope.themes').get_dropdown(opts)
+
+  local _i = 0
+  -- TODO: better names for terminal buffers
+  local results = vim.fn.map(ft_state.ft_bufs, function(bufnr)
+    _i = _i + 1
+    return { idx = _i, bufnr = bufnr, name = vim.api.nvim_buf_get_name(bufnr) }
+  end)
+
+  -- see: https://github.com/nvim-telescope/telescope.nvim/blob/master/developers.md
+  pickers
+    .new(theme, {
+      prompt_title = 'Ssearch Floaterminals',
+      finder = finders.new_table {
+        results = results,
+        entry_maker = function(entry)
+          return {
+            value = entry,
+            display = function(tbl)
+              return string.format('%d: %s', tbl.value.idx, tbl.value.name)
+            end,
+            ordinal = entry.name,
+          }
+        end,
+      },
+      sorter = conf.generic_sorter(opts),
+      attach_mappings = function(prompt_bufnr, _)
+        actions.select_default:replace(function()
+          actions.close(prompt_bufnr)
+          local selection = action_state.get_selected_entry()
+          toggle_terminal(selection.value.bufnr)
+        end)
+        return true
+      end,
+    })
+    :find()
+end
+
 vim.api.nvim_create_user_command('FloaterminalList', function(_)
   print(vim.inspect(ft_state))
 end, {})
 -- TODO: toggle terminal by index (create keymaps '<localleader>t{index}')
 -- make functions nonlocal?
+
+vim.keymap.set('n', '<localleader>ts', toggle_from_telescope, { desc = 'Floa[t]erminal [S]earch' })
 vim.keymap.set('n', '<localleader>tt', toggle_recent_terminal, { desc = '[T]oggle Recent Floa[t]erminal' })
 vim.keymap.set('n', '<localleader>tn', toggle_terminal, { desc = '[T]oggle [N]ew Floaterminal' })
