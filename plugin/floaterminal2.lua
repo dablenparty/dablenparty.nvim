@@ -12,8 +12,15 @@ local ft_state = {
   },
 }
 
+---@return number buf Newly created buffer ID.
+function create_new_buffer()
+  buf = vim.api.nvim_create_buf(false, true)
+  vim.list_extend(ft_state.ft_bufs, { buf })
+  return buf
+end
+
 ---@param opts? { buf: number, height?: number, width?: number }
----@return floaterminal.OpenTermState
+---@return floaterminal.OpenTermState state
 function create_floating_window(opts)
   opts = opts or {}
 
@@ -30,8 +37,7 @@ function create_floating_window(opts)
   if vim.api.nvim_buf_is_valid(opts.buf) then
     win_buf = opts.buf
   else
-    win_buf = vim.api.nvim_create_buf(false, true)
-    vim.list_extend(ft_state.ft_bufs, { win_buf })
+    win_buf = create_new_buffer()
   end
 
   local win_config = {
