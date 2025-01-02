@@ -48,3 +48,37 @@ local function create_floating_window(opts)
 
   return { buf = win_buf, win = window }
 end
+
+---@param win_buf? number Optional buffer to attach to the window
+local function toggle_terminal(win_buf)
+  win_buf = win_buf or -1
+  if not vim.api.nvim_win_is_valid(ft_state.floating.win) then
+    ft_state.floating = create_floating_window { buf = win_buf }
+    win_buf = ft_state.floating.buf
+    ft_state.most_recent_buf = win_buf
+    if vim.bo[win_buf].buftype ~= 'terminal' then
+      vim.cmd [[terminal]]
+    end
+    vim.schedule(function()
+      vim.cmd [[startinsert]]
+    end)
+  else
+    vim.api.nvim_win_hide(ft_state.floating.win)
+  end
+end
+
+local function toggle_recent_terminal()
+  if vim.api.nvim_buf_is_valid(ft_state.most_recent_buf) then
+    toggle_terminal(ft_state.most_recent_buf)
+  else
+    vim.notify('No recent Floaterminal found', vim.log.levels.WARN, {})
+  end
+end
+
+vim.api.nvim_create_user_command('FloaterminalList', function(_)
+  print(vim.inspect(ft_state))
+end, {})
+-- TODO: toggle terminal by index (create keymaps '<localleader>t{index}')
+-- make functions nonlocal?
+vim.keymap.set('n', '<localleader>tt', toggle_recent_terminal, { desc = '[T]oggle Recent Floa[t]erminal' })
+vim.keymap.set('n', '<localleader>tn', toggle_terminal, { desc = '[T]oggle [N]ew Floaterminal' })
