@@ -135,7 +135,6 @@ vim.api.nvim_create_user_command('FloaterminalList', function(_)
   print(vim.inspect(ft_state))
 end, {})
 -- TODO: toggle terminal by index (create keymaps '<localleader>t{index}')
--- make functions nonlocal?
 
 vim.keymap.set('n', '<localleader>ts', toggle_from_telescope, { desc = 'Floa[t]erminal [S]earch' })
 vim.keymap.set('n', '<localleader>tt', toggle_recent_terminal, { desc = '[T]oggle Recent Floa[t]erminal' })
