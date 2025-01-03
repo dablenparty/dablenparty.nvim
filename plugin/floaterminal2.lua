@@ -99,7 +99,7 @@ function toggle_from_telescope(opts)
 
   -- TODO: better names for terminal buffers
   local results = vim.fn.map(get_term_buffers(), function(idx, bufnr)
-    return { idx = idx, bufnr = bufnr, name = vim.api.nvim_buf_get_name(bufnr) }
+    return { idx = idx + 1, bufnr = bufnr, name = vim.api.nvim_buf_get_name(bufnr) }
   end)
 
   -- see: https://github.com/nvim-telescope/telescope.nvim/blob/master/developers.md
