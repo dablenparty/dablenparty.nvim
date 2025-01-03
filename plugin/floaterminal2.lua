@@ -1,11 +1,10 @@
 ---@diagnostic disable: lowercase-global
 ---@alias floaterminal.FloatingWinState { buf: number, win: number }
----@alias floaterminal.State { most_recent_buf: number, ft_bufs: [number], floating: floaterminal.FloatingWinState }
+---@alias floaterminal.State { most_recent_buf: number, floating: floaterminal.FloatingWinState }
 
 ---@type floaterminal.State
 local ft_state = {
   most_recent_buf = -1,
-  ft_bufs = {},
   floating = {
     buf = -1,
     win = -1,
@@ -14,9 +13,7 @@ local ft_state = {
 
 ---@return number buf Newly created buffer ID.
 function create_new_buffer()
-  buf = vim.api.nvim_create_buf(false, true)
-  vim.list_extend(ft_state.ft_bufs, { buf })
-  return buf
+  return vim.api.nvim_create_buf(false, true)
 end
 
 ---Creates a minimal floating window relative to the editor from the provided options.
@@ -57,6 +54,13 @@ function create_floating_window(opts)
   return { buf = win_buf, win = window }
 end
 
+function get_term_buffers()
+  local all_bufs = vim.api.nvim_list_bufs()
+  return vim.fn.filter(all_bufs, function(_, bufnr)
+    return vim.api.nvim_buf_is_loaded(bufnr) and vim.bo[bufnr].buftype == 'terminal'
+  end)
+end
+
 ---Toggles the Floaterminal window, displaying the proivided buffer. If the buffer is not yet a terminal, it is
 ---made into one.
 ---@param win_buf? number Optional buffer to attach to the window. If one is not provided, a new buffer is created.
@@ -93,11 +97,9 @@ function toggle_from_telescope(opts)
   local conf = require('telescope.config').values
   local theme = require('telescope.themes').get_dropdown(opts)
 
-  local _i = 0
   -- TODO: better names for terminal buffers
-  local results = vim.fn.map(ft_state.ft_bufs, function(bufnr)
-    _i = _i + 1
-    return { idx = _i, bufnr = bufnr, name = vim.api.nvim_buf_get_name(bufnr) }
+  local results = vim.fn.map(get_term_buffers(), function(idx, bufnr)
+    return { idx = idx, bufnr = bufnr, name = vim.api.nvim_buf_get_name(bufnr) }
   end)
 
   -- see: https://github.com/nvim-telescope/telescope.nvim/blob/master/developers.md
