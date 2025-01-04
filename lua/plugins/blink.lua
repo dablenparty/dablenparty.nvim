@@ -46,6 +46,7 @@ return {
       {
         'saghen/blink.compat',
         lazy = true,
+        version = false,
       },
     },
 
@@ -84,7 +85,7 @@ return {
         default = { 'lsp', 'path', 'luasnip', 'buffer', 'dadbod', 'markdown' },
         providers = {
           dadbod = { name = 'Dadbod', module = 'vim_dadbod_completion.blink' },
-          markdown = { name = 'RenderMarkdown', module = 'render-markdown.integ.blink' },
+          markdown = { name = 'RenderMarkdown', module = 'render-markdown.integ.blink', fallbacks = { 'lsp' } },
           obsidian = {
             name = 'obsidian',
             module = 'blink.compat.source',
