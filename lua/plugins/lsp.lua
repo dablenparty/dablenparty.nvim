@@ -132,6 +132,12 @@ return {
         end,
       })
 
+      vim.api.nvim_create_autocmd({ 'BufEnter' }, {
+        pattern = { 'docker-compose.yaml', 'docker-compose.yml', 'compose.yaml', 'compose.yml' },
+        group = vim.api.nvim_create_augroup('docker-compose-lsp-attach', { clear = true }),
+        command = 'set filetype=yaml.docker-compose',
+      })
+
       -- Change diagnostic symbols in the sign column (gutter)
       if vim.g.have_nerd_font then
         local signs = { ERROR = '', WARN = '', INFO = '', HINT = '' }
@@ -154,6 +160,8 @@ return {
       local servers = {
         basedpyright = {},
         bashls = { filetypes = { 'sh', 'zsh' } },
+        dockerls = {},
+        docker_compose_language_service = {},
         lua_ls = {
           -- other keys
           -- cmd = {...},
@@ -170,7 +178,7 @@ return {
         marksman = {},
       }
       local formatters = { 'prettier', 'shfmt', 'stylua' }
-      local linters = { 'markdownlint-cli2', 'shellcheck' }
+      local linters = { 'hadolint', 'markdownlint-cli2', 'shellcheck' }
       -- You can add other tools here that you want Mason to install
       -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
@@ -184,6 +192,8 @@ return {
         automatic_installation = true,
         ensure_installed = {}, -- Handled by mason-tool-installer above
         handlers = {
+          -- I have started compiling rust_analyzer myself.
+          -- It must be disabled here to be used by rustacean.nvim.
           ['rust_analyzer'] = function() end,
           function(server_name)
             local server = servers[server_name] or {}
