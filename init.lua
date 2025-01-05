@@ -182,5 +182,7 @@ require('lazy').setup {
   },
 }
 
+vim.keymap.set('n', '<leader>lz', '<CMD>Lazy<cr>', { desc = 'Open Lazy Plugin Manager' })
+
 -- Set the current default colorscheme (make sure this isn't called somewhere else too!)
 vim.cmd [[colorscheme tokyonight-night]]
