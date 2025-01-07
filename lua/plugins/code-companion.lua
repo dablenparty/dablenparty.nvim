@@ -7,6 +7,13 @@ return {
         -- load when loading a buffer
         enable_on_load = true,
       },
+      config = function(_, opts)
+        opts = opts or {}
+
+        require('dotenv').setup(opts)
+
+        vim.cmd(string.format('Dotenv "%s"', vim.fn.stdpath 'config'))
+      end,
     },
     { 'nvim-lua/plenary.nvim', branch = 'master' },
     'nvim-treesitter/nvim-treesitter',
@@ -22,11 +29,7 @@ return {
           },
           env = {
             url = function()
-              local url = os.getenv 'OLLAMA_URL'
-              if url == nil then
-                vim.notify('Environment variable "OLLAMA_URL" not set, codecompanion will not work', vim.log.levels.ERROR, { title = 'codecompanion' })
-              end
-              return url
+              return os.getenv 'OLLAMA_URL'
             end,
           },
           headers = {
@@ -48,6 +51,27 @@ return {
     opts = opts or {}
     -- sets global provider so that I don't have to manually set it for each action
     vim.g.codecompanion_adapter = 'ollama'
+
     require('codecompanion').setup(opts)
+
+    vim.api.nvim_set_keymap('n', '<C-a>', '<cmd>CodeCompanionActions<cr>', { noremap = true, silent = true })
+    vim.api.nvim_set_keymap('v', '<C-a>', '<cmd>CodeCompanionActions<cr>', { noremap = true, silent = true })
+    vim.api.nvim_set_keymap('n', '<LocalLeader>a', '<cmd>CodeCompanionChat Toggle<cr>', { noremap = true, silent = true })
+    vim.api.nvim_set_keymap('v', '<LocalLeader>a', '<cmd>CodeCompanionChat Toggle<cr>', { noremap = true, silent = true })
+    vim.api.nvim_set_keymap('v', 'ga', '<cmd>CodeCompanionChat Add<cr>', { noremap = true, silent = true })
+
+    vim.api.nvim_create_autocmd('VimEnter', {
+      desc = 'Check for envvars required by codecompanion',
+      group = vim.api.nvim_create_augroup('codecompanion-vim-enter', { clear = true }),
+      once = true,
+      callback = function(_)
+        local url = os.getenv 'OLLAMA_URL'
+        if url == nil then
+          vim.schedule(function()
+            vim.notify('OLLAMA_URL not set in neovim config, codecompanion will not work', vim.log.levels.WARN, { title = 'Missing Environment Variable' })
+          end)
+        end
+      end,
+    })
   end,
 }
