@@ -188,7 +188,7 @@ return {
       -- Basically a mason auto-updater
       require('mason-tool-installer').setup { ensure_installed = ensure_installed, run_on_start = true, start_delay = 3000 }
 
-      require('mason-lspconfig').setup {
+      local mason_opts = {
         automatic_installation = true,
         ensure_installed = {}, -- Handled by mason-tool-installer above
         handlers = {
@@ -197,11 +197,24 @@ return {
           ['rust_analyzer'] = function() end,
           function(server_name)
             local server = servers[server_name] or {}
-            server.capabilities = require('blink.cmp').get_lsp_capabilities(server.capabilities)
+            local version = vim.version()
+            if version.minor < 11 then
+              -- TODO: remove when neovim 0.11 goes stable
+              -- not required on newer versions of neovim/blink
+              local semver_str = string.format('%d.%d.%d', version.major, version.minor, version.patch)
+              vim.notify_once(
+                string.format('Found neovim v%s, LSP capabilities will be set by blink.cmp', semver_str),
+                vim.log.levels.WARN,
+                { title = 'blink.cmp' }
+              )
+              server.capabilities = require('blink.cmp').get_lsp_capabilities(server.capabilities)
+            end
             require('lspconfig')[server_name].setup(server)
           end,
         },
       }
+
+      require('mason-lspconfig').setup(vim.tbl_extend('keep', mason_opts, opts))
     end,
   },
   -- Flutter & Dart
