@@ -197,11 +197,11 @@ return {
           ['rust_analyzer'] = function() end,
           function(server_name)
             local server = servers[server_name] or {}
-            local version = vim.version()
-            if version.minor < 11 then
+            local utils = require 'utils'
+            if not utils.is_nvim_11() then
               -- TODO: remove when neovim 0.11 goes stable
               -- not required on newer versions of neovim/blink
-              local semver_str = string.format('%d.%d.%d', version.major, version.minor, version.patch)
+              local semver_str = utils.get_semver_string()
               vim.notify_once(
                 string.format('Found neovim v%s, LSP capabilities will be set by blink.cmp', semver_str),
                 vim.log.levels.WARN,
