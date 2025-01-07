@@ -40,7 +40,11 @@ return {
           require('trouble').prev { skip_groups = true, jump = true }
           vim.diagnostic.open_float()
         elseif vim.diagnostic.is_enabled() and vim.diagnostic.get_prev() ~= nil then
-          vim.diagnostic.goto_prev { float = true }
+          if require('utils').is_nvim_11() then
+            vim.diagnostic.jump { count = -1, float = true }
+          else
+            vim.diagnostic.goto_prev { float = true }
+          end
         else
           local ok, err = pcall(vim.cmd.cprev)
           if ok then
@@ -63,7 +67,11 @@ return {
           require('trouble').next { skip_groups = true, jump = true }
           vim.diagnostic.open_float()
         elseif vim.diagnostic.is_enabled() and vim.diagnostic.get_next() ~= nil then
-          vim.diagnostic.goto_next { float = true }
+          if require('utils').is_nvim_11() then
+            vim.diagnostic.jump { count = 1, float = true }
+          else
+            vim.diagnostic.goto_next { float = true }
+          end
         else
           local ok, err = pcall(vim.cmd.cnext)
           if ok then
