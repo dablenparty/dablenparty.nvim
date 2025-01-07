@@ -1,6 +1,13 @@
 return {
   'olimorris/codecompanion.nvim',
   dependencies = {
+    {
+      'ellisonleao/dotenv.nvim',
+      opts = {
+        -- load when loading a buffer
+        enable_on_load = true,
+      },
+    },
     { 'nvim-lua/plenary.nvim', branch = 'master' },
     'nvim-treesitter/nvim-treesitter',
   },
