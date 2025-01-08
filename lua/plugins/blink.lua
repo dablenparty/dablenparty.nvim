@@ -28,13 +28,10 @@ return {
   },
   {
     'saghen/blink.cmp',
-    -- optional: provides snippets for the snippet source
     dependencies = {
       {
         'L3MON4D3/LuaSnip',
-        -- follow latest release.
-        version = 'v2.*', -- Replace <CurrentMajor> by the latest released major (first number of latest release)
-        -- install jsregexp (optional!).
+        version = 'v2.*',
         build = 'make install_jsregexp',
       },
       {
@@ -67,22 +64,9 @@ return {
         nerd_font_variant = 'mono',
       },
 
-      snippets = {
-        expand = function(snippet)
-          require('luasnip').lsp_expand(snippet)
-        end,
-        active = function(filter)
-          if filter and filter.direction then
-            return require('luasnip').jumpable(filter.direction)
-          end
-          return require('luasnip').in_snippet()
-        end,
-        jump = function(direction)
-          require('luasnip').jump(direction)
-        end,
-      },
+      snippets = { preset = 'luasnip' },
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'buffer', 'codecompanion', 'dadbod', 'markdown' },
+        default = { 'lsp', 'path', 'snippets', 'buffer', 'dadbod', 'markdown', 'codecompanion' },
         providers = {
           dadbod = { name = 'Dadbod', module = 'vim_dadbod_completion.blink' },
           markdown = { name = 'RenderMarkdown', module = 'render-markdown.integ.blink', fallbacks = { 'lsp' } },
