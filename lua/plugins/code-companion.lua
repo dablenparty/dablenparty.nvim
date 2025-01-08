@@ -5,14 +5,15 @@ return {
       'ellisonleao/dotenv.nvim',
       opts = {
         -- load when loading a buffer
-        enable_on_load = true,
+        enable_on_load = false,
       },
       config = function(_, opts)
         opts = opts or {}
 
         require('dotenv').setup(opts)
 
-        vim.cmd(string.format('Dotenv "%s"', vim.fn.stdpath 'config'))
+        local env_path = vim.fn.stdpath 'config' .. '/.env'
+        vim.cmd(string.format('Dotenv %s', env_path))
       end,
     },
     { 'nvim-lua/plenary.nvim', branch = 'master' },
