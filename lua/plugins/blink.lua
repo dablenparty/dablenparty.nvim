@@ -82,7 +82,7 @@ return {
         end,
       },
       sources = {
-        default = { 'lsp', 'path', 'luasnip', 'buffer', 'codecompanion', 'dadbod', 'markdown' },
+        default = { 'lsp', 'path', 'snippets', 'buffer', 'codecompanion', 'dadbod', 'markdown' },
         providers = {
           dadbod = { name = 'Dadbod', module = 'vim_dadbod_completion.blink' },
           markdown = { name = 'RenderMarkdown', module = 'render-markdown.integ.blink', fallbacks = { 'lsp' } },
