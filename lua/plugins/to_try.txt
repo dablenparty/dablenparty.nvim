@@ -1,5 +1,4 @@
 doing.nvim
 flash.nvim
 nvim-hlslens
-tiny-inline-diagnostic.nvim
 colorful-menu.nvim
