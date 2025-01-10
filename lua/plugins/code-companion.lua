@@ -1,5 +1,6 @@
 return {
   'olimorris/codecompanion.nvim',
+  lazy = true,
   dependencies = {
     {
       'ellisonleao/dotenv.nvim',
@@ -48,18 +49,20 @@ return {
       allow_insecure = true,
     },
   },
+  keys = {
+    { '<C-a>', '<cmd>CodeCompanionActions<cr>', mode = 'n', { noremap = true, silent = true } },
+    { '<C-a>', '<cmd>CodeCompanionActions<cr>', mode = 'v', { noremap = true, silent = true } },
+    { '<LocalLeader>a', '<cmd>CodeCompanionChat Toggle<cr>', mode = 'n', { noremap = true, silent = true } },
+    { '<LocalLeader>a', '<cmd>CodeCompanionChat Toggle<cr>', mode = 'v', { noremap = true, silent = true } },
+    { 'ga', '<cmd>CodeCompanionChat Add<cr>', mode = 'v', { noremap = true, silent = true } },
+  },
+  cmd = { 'CodeCompanion', 'CodeCompanionChat', 'CodeCompanionActions', 'CodeCompanionCmd' },
   config = function(_, opts)
     opts = opts or {}
     -- sets global provider so that I don't have to manually set it for each action
     vim.g.codecompanion_adapter = 'ollama'
 
     require('codecompanion').setup(opts)
-
-    vim.api.nvim_set_keymap('n', '<C-a>', '<cmd>CodeCompanionActions<cr>', { noremap = true, silent = true })
-    vim.api.nvim_set_keymap('v', '<C-a>', '<cmd>CodeCompanionActions<cr>', { noremap = true, silent = true })
-    vim.api.nvim_set_keymap('n', '<LocalLeader>a', '<cmd>CodeCompanionChat Toggle<cr>', { noremap = true, silent = true })
-    vim.api.nvim_set_keymap('v', '<LocalLeader>a', '<cmd>CodeCompanionChat Toggle<cr>', { noremap = true, silent = true })
-    vim.api.nvim_set_keymap('v', 'ga', '<cmd>CodeCompanionChat Add<cr>', { noremap = true, silent = true })
 
     vim.api.nvim_create_autocmd('VimEnter', {
       desc = 'Check for envvars required by codecompanion',

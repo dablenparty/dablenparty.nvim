@@ -66,8 +66,9 @@ return {
 
       snippets = { preset = 'luasnip' },
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'buffer', 'dadbod', 'markdown', 'codecompanion' },
+        default = { 'lsp', 'path', 'snippets', 'buffer' },
         providers = {
+          codecompanion = { name = 'CodeCompanion', module = 'codecompanion.providers.completion.blink' },
           dadbod = { name = 'Dadbod', module = 'vim_dadbod_completion.blink' },
           markdown = { name = 'RenderMarkdown', module = 'render-markdown.integ.blink', fallbacks = { 'lsp' } },
           obsidian = {
