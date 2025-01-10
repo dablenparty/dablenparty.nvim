@@ -1,6 +1,7 @@
 return {
   'sainnhe/everforest',
   priority = 1000,
+  lazy = true,
   init = function()
     -- add config here, without the "everforest_" prefix
     local opts = {
