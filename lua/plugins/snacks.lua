@@ -51,7 +51,7 @@ return {
       function()
         Snacks.rename.rename_file()
       end,
-      desc = 'Rename File',
+      desc = '[R]ename [F]ile',
     },
     {
       '<leader>gB',
