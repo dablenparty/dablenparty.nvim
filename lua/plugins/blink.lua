@@ -66,7 +66,20 @@ return {
 
       snippets = { preset = 'luasnip' },
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'buffer' },
+        default = function()
+          -- markwon, dadbod, and codecompanion all handle filetype filtering internally
+          local sources = { 'lsp', 'path', 'snippets', 'buffer', 'markdown', 'dadbod', 'codecompanion' }
+
+          -- Remove LSP sources when editing comments.
+          -- Since some langauges have multiple comment types (and "comment_content" is its own node),
+          -- simply checking if the node type has the word "comment" works better for me.
+          local success, node = pcall(vim.treesitter.get_node)
+          if success and node and node:type():find 'comment' then
+            sources = { 'path', 'snippets', 'buffer' }
+          end
+
+          return sources
+        end,
         providers = {
           codecompanion = { name = 'CodeCompanion', module = 'codecompanion.providers.completion.blink' },
           dadbod = { name = 'Dadbod', module = 'vim_dadbod_completion.blink' },
