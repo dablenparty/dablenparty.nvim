@@ -1,24 +1,38 @@
 # dablenparty.nvim
 
-## Installation
+## Install Neovim
 
-### Install Neovim
+I recommend installing from [Homebrew](https://brew.sh/) on most distributions, it usually has the most recent [stable](https://github.com/neovim/neovim/releases/tag/stable) version. `pacman` will also work in place of Homebrew.
 
-I recommend installing from [Homebrew](https://brew.sh/) on most distributions, it usually has the most recent [stable](https://github.com/neovim/neovim/releases/tag/stable) version. There is also the [nightly](https://github.com/neovim/neovim/releases/tag/nightly) version.
+<details>
 
-`pacman` will also work in place of Homebrew.
+  <summary>Nightly</summary>
 
-### Install External Dependencies
+There is also a [nightly](https://github.com/neovim/neovim/releases/tag/nightly) version, although it must be compiled from source. This can be done manually, but I recommend using a package manager like Homebrew or an [AUR helper](https://wiki.archlinux.org/title/AUR_helpers). For example, using Homebrew:
+
+```bash
+brew install neovim --HEAD
+```
+
+Another example using [`yay`](https://aur.archlinux.org/packages/yay):
+
+```bash
+yay -S neovim-git
+```
+
+</details>
+
+## Install External Dependencies
 
 > **IMPORTANT!!**
 > Before you install anything, make sure you have a [Nerd Font](https://www.nerdfonts.com/). At the time of writing, I use [JetBrains Mono](https://www.programmingfonts.org/#jetbrainsmono).
 
-#### Package Managers
+### Package Managers
 
 - macOS/Linux: [Homebrew](https://brew.sh/) or `pacman`
 - Windows: `winget` and Chocolatey ([see below](#native-windows-installation))
 
-#### Command Line Utilities
+### Command Line Utilities
 
 - Basic utils: `git`, `unzip`
 - Clipboard tool (xclip/xsel/win32yank or other depending on platform)
