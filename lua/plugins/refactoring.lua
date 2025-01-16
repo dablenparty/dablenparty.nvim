@@ -21,8 +21,6 @@ return {
   },
   opts = {},
   config = function()
-    require('telescope').load_extension 'refactoring'
-
     -- TODO: change to keys map?
     vim.keymap.set('x', '<leader>rf', function()
       require('refactoring').refactor 'Extract Function'
@@ -51,10 +49,5 @@ return {
       require('refactoring').refactor 'Extract Block To File'
     end, { desc = 'Extract [B]lock to File' })
     -- Extract block supports only normal mode
-
-    -- prompt for a refactor to apply when the remap is triggered
-    vim.keymap.set({ 'n', 'x' }, '<leader>rr', function()
-      require('telescope').extensions.refactoring.refactors()
-    end, { desc = 'Open [R]efactoring Menu' })
   end,
 }
