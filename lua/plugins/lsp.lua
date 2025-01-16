@@ -3,17 +3,6 @@ return {
     -- Main LSP Configuration
     'neovim/nvim-lspconfig',
     dependencies = {
-      {
-        'folke/lazydev.nvim',
-        ft = 'lua', -- only load on lua files
-        opts = {
-          library = {
-            -- See the configuration section for more details
-            -- Load luvit types when the `vim.uv` word is found
-            { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
-          },
-        },
-      },
       -- Automatically install LSPs and related tools to stdpath for Neovim
       { 'williamboman/mason.nvim', config = true }, -- NOTE: Must be loaded before dependants
       'williamboman/mason-lspconfig.nvim',
@@ -21,8 +10,6 @@ return {
 
       -- Useful status update notifications for LSP.
       { 'j-hui/fidget.nvim', opts = {} },
-
-      'saghen/blink.cmp',
     },
     opts = {
       setup = {
@@ -216,6 +203,19 @@ return {
 
       require('mason-lspconfig').setup(vim.tbl_extend('keep', mason_opts, opts))
     end,
+  },
+  -- LuaLS
+  {
+    'folke/lazydev.nvim',
+    lazy = true,
+    ft = 'lua', -- only load on lua files
+    opts = {
+      library = {
+        -- See the configuration section for more details
+        -- Load luvit types when the `vim.uv` word is found
+        { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
+      },
+    },
   },
   -- Flutter & Dart
   {

@@ -49,7 +49,8 @@ return {
 
     build = 'cargo +nightly build --release',
 
-    event = 'InsertEnter',
+    event = 'LspAttach',
+    lazy = true,
 
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
@@ -70,6 +71,10 @@ return {
           -- markwon, dadbod, and codecompanion all handle filetype filtering internally
           local sources = { 'lsp', 'path', 'snippets', 'buffer', 'markdown', 'dadbod', 'codecompanion' }
 
+          if vim.bo.filetype == 'lua' then
+            table.insert(sources, 1, 'lazydev')
+          end
+
           -- Remove LSP sources when editing comments.
           -- Since some langauges have multiple comment types (and "comment_content" is its own node),
           -- simply checking if the node type has the word "comment" works better for me.
@@ -83,6 +88,12 @@ return {
         providers = {
           codecompanion = { name = 'CodeCompanion', module = 'codecompanion.providers.completion.blink' },
           dadbod = { name = 'Dadbod', module = 'vim_dadbod_completion.blink' },
+          lazydev = {
+            name = 'LazyDev',
+            module = 'lazydev.integrations.blink',
+            -- make lazydev completions top priority (see `:h blink.cmp`)
+            score_offset = 100,
+          },
           markdown = { name = 'RenderMarkdown', module = 'render-markdown.integ.blink', fallbacks = { 'lsp' } },
           obsidian = {
             name = 'obsidian',
