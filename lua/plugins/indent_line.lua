@@ -5,8 +5,12 @@ return {
       'HiPhish/rainbow-delimiters.nvim',
     },
     main = 'ibl',
+    lazy = true,
+    events = 'LspAttach',
     opts = {},
-    config = function()
+    config = function(_, opts)
+      opts = opts or {}
+
       local highlight = {
         'RainbowRed',
         'RainbowYellow',
@@ -30,7 +34,10 @@ return {
       end)
 
       require('rainbow-delimiters.setup').setup { highlight = highlight }
-      require('ibl').setup { scope = { highlight = highlight } }
+
+      local ibl_opts = { scope = { highlight = highlight } }
+      vim.tbl_deep_extend('error', ibl_opts, opts)
+      require('ibl').setup(ibl_opts)
 
       hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
     end,
