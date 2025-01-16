@@ -1,6 +1,6 @@
 return {
   'kevinhwang91/nvim-hlslens',
-  event = 'BufRead',
+  event = 'BufEnter',
   config = function()
     require('hlslens').setup {
       calm_down = true,
