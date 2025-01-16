@@ -1,7 +1,9 @@
 return {
+  -- better [a]round and [i]nside text objects
   {
     'echasnovski/mini.ai',
     version = '*',
+    event = 'VeryLazy',
     opts = {
       n_lines = 500,
     },
@@ -20,6 +22,7 @@ return {
   {
     'echasnovski/mini.surround',
     version = '*',
+    event = 'VeryLazy',
     opts = {},
   },
   {
