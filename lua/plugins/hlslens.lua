@@ -19,19 +19,18 @@ return {
 
     ---@param lhs string
     ---@param rhs string
-    ---@param opts vim.api.keyset.keymap?
-    local set_key = function(lhs, rhs, opts)
-      opts = opts or {}
-      local default_opts = { noremap = true, silent = true }
-      vim.api.nvim_set_keymap('n', lhs, rhs, vim.tbl_extend('force', default_opts, opts))
+    ---@param desc string
+    local set_key = function(lhs, rhs, desc)
+      local opts = { noremap = true, silent = true, desc = desc }
+      vim.keymap.set('n', lhs, rhs, opts)
     end
 
-    set_key('n', [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]], { desc = 'Goto next search result' })
-    set_key('N', [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]], { desc = 'Goto previous search result' })
-    set_key('*', [[*<Cmd>lua require('hlslens').start()<CR>]], { desc = 'Search forward for nearest word' })
-    set_key('#', [[#<Cmd>lua require('hlslens').start()<CR>]], { desc = 'Search backwrad for the nearest word' })
-    set_key('g*', [[g*<Cmd>lua require('hlslens').start()<CR>]], { desc = 'Goto next occurence of nearest word' })
-    set_key('g#', [[g#<Cmd>lua require('hlslens').start()<CR>]], { desc = 'Goto previous occurence of nearest word' })
-    set_key('<Leader>l', '<Cmd>noh<CR>', { desc = 'Disable search highlights' })
+    set_key('n', [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]], 'Goto next search result')
+    set_key('N', [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]], 'Goto previous search result')
+    set_key('*', [[*<Cmd>lua require('hlslens').start()<CR>]], 'Search forward for nearest word')
+    set_key('#', [[#<Cmd>lua require('hlslens').start()<CR>]], 'Search backwrad for the nearest word')
+    set_key('g*', [[g*<Cmd>lua require('hlslens').start()<CR>]], 'Goto next occurence of nearest word')
+    set_key('g#', [[g#<Cmd>lua require('hlslens').start()<CR>]], 'Goto previous occurence of nearest word')
+    set_key('<Leader>l', '<Cmd>noh<CR>', 'Disable search highlights')
   end,
 }

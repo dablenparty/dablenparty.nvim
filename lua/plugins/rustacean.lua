@@ -7,18 +7,14 @@ return {
       pattern = { '*.rs', 'Cargo.toml' },
       group = vim.api.nvim_create_augroup('rustaceanvim-lsp-attach', { clear = true }),
       callback = function(event)
-        ---@param lhs string
-        ---@param rhs string
-        ---@param opts vim.api.keyset.keymap?
-        local set_key = function(lhs, rhs, opts)
-          opts = opts or {}
-          local default_opts = { buffer = event.buf, silent = true }
+        local set_key = function(lhs, rhs, desc)
+          local opts = { buffer = event.buf, silent = true, desc = desc }
 
-          vim.api.nvim_set_keymap('n', lhs, rhs, vim.tbl_deep_extend('force', default_opts, opts))
+          vim.keymap.set('n', lhs, rhs, opts)
         end
 
-        set_key('<leader>ca', '<cmd>RustLsp codeAction<CR>', { desc = '[C]ode [A]ction' })
-        set_key('K', '<cmd>RustLsp hover actions', { desc = 'Hover Menu' })
+        set_key('<leader>ca', '<cmd>RustLsp codeAction<CR>', '[C]ode [A]ction')
+        set_key('K', '<cmd>RustLsp hover actions', 'Hover Menu')
       end,
     })
   end,
