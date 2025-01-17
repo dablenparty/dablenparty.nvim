@@ -36,7 +36,7 @@ return {
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
         callback = function(event)
-          local set_key = function(keys, func, desc, mode)
+          local setKey = function(keys, func, desc, mode)
             mode = mode or 'n'
             vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
           end
@@ -44,39 +44,39 @@ return {
           -- Jump to the definition of the word under your cursor.
           --  This is where a variable was first declared, or where a function is defined, etc.
           --  To jump back, press <C-t>.
-          set_key('gd', require('fzf-lua').lsp_definitions, '[G]oto [D]efinition')
+          setKey('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
 
           -- Find references for the word under your cursor.
-          set_key('gr', require('fzf-lua').lsp_references, '[G]oto [R]eferences')
+          setKey('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
 
           -- Jump to the implementation of the word under your cursor.
           --  Useful when your language has ways of declaring types without an actual implementation.
-          set_key('gI', require('fzf-lua').lsp_implementations, '[G]oto [I]mplementation')
+          setKey('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
 
           -- Jump to the type of the word under your cursor.
           --  Useful when you're not sure what type a variable is and you want to see
           --  the definition of its *type*, not where it was *defined*.
-          set_key('<leader>D', require('fzf-lua').lsp_typedefs, 'Type [D]efinition')
+          setKey('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
 
           -- Fuzzy find all the symbols in your current document.
           --  Symbols are things like variables, functions, types, etc.
-          set_key('<leader>ds', require('fzf-lua').lsp_document_symbols, '[D]ocument [S]ymbols')
+          setKey('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
 
           -- Fuzzy find all the symbols in your current workspace.
           --  Similar to document symbols, except searches over your entire project.
-          set_key('<leader>ws', require('fzf-lua').lsp_live_workspace_symbols, '[W]orkspace [S]ymbols')
+          setKey('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
           -- Rename the variable under your cursor.
           --  Most Language Servers support renaming across files, etc.
-          set_key('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+          setKey('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
 
           -- Execute a code action, usually your cursor needs to be on top of an error
           -- or a suggestion from your LSP for this to activate.
-          set_key('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction', { 'n', 'x' })
+          setKey('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction', { 'n', 'x' })
 
           -- WARN: This is not Goto Definition, this is Goto Declaration.
           --  For example, in C this would take you to the header.
-          set_key('gD', require('fzf-lua').lsp_declarations, '[G]oto [D]eclaration')
+          setKey('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
           -- The following two autocommands are used to highlight references of the
           -- word under your cursor when your cursor rests there for a little while.
@@ -227,11 +227,17 @@ return {
       decorations = {
         device = true,
       },
+      lsp = {
+        on_attach = function()
+          local telescope = require 'telescope'
+          pcall(telescope.load_extension, 'flutter')
+          vim.keymap.set('n', '<leader>sl', telescope.extensions.flutter.commands, { desc = '[S]earch F[l]utter Commands' })
+        end,
+      },
     },
   },
   { -- Autoformat
     'stevearc/conform.nvim',
-    lazy = true,
     event = { 'BufWritePre' },
     cmd = { 'ConformInfo' },
     keys = {

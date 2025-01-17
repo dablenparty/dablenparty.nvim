@@ -124,7 +124,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
--- NOTE: For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
+-- NOTE: For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec` (or use telescope)
 require('lazy').setup {
   spec = {
     -- Detect tabstop and shiftwidth automatically
