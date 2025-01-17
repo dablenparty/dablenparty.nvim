@@ -112,9 +112,10 @@ return {
           --
           -- This may be unwanted, since they displace some of your code
           if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
-            set_key('<leader>th', function()
-              vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
-            end, '[T]oggle Inlay [H]ints')
+            Snacks.toggle.inlay_hints():map '<leader>uh'
+            -- set_key('<leader>th', function()
+            --   vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
+            -- end, '[T]oggle Inlay [H]ints')
           end
         end,
       })
