@@ -4,7 +4,7 @@ return {
     'neovim/nvim-lspconfig',
     dependencies = {
       -- Automatically install LSPs and related tools to stdpath for Neovim
-      { 'williamboman/mason.nvim', config = true }, -- NOTE: Must be loaded before dependants
+      { 'williamboman/mason.nvim', opts = {} }, -- NOTE: Must be loaded before dependants
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
 
@@ -136,14 +136,6 @@ return {
         vim.diagnostic.config { signs = { text = diagnostic_signs } }
       end
 
-      -- Ensure the servers and tools above are installed
-      --  To check the current status of installed tools and/or manually install
-      --  other tools, you can run
-      --    :Mason
-      --
-      --  You can press `g?` for help in this menu.
-      require('mason').setup()
-
       -- See `:help lspconfig-all` for a list of all the pre-configured LSPs
       local servers = {
         basedpyright = {},
@@ -173,7 +165,12 @@ return {
       vim.list_extend(ensure_installed, formatters)
       vim.list_extend(ensure_installed, linters)
 
-      -- Basically a mason auto-updater
+      -- Ensures the servers and tools above are installed
+      --  To check the current status of installed tools and/or manually install
+      --  other tools, you can run
+      --    :Mason
+      --
+      --  You can press `g?` for help in this menu.
       require('mason-tool-installer').setup { ensure_installed = ensure_installed, run_on_start = true, start_delay = 3000 }
 
       local mason_opts = {
