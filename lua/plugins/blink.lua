@@ -49,7 +49,7 @@ return {
 
     build = 'cargo +nightly build --release',
 
-    event = 'LspAttach',
+    event = { 'InsertEnter', 'LspAttach' },
     lazy = true,
 
     ---@module 'blink.cmp'
@@ -68,19 +68,32 @@ return {
       snippets = { preset = 'luasnip' },
       sources = {
         default = function()
-          -- markwon, dadbod, and codecompanion all handle filetype filtering internally
-          local sources = { 'lsp', 'path', 'snippets', 'buffer', 'markdown', 'dadbod', 'codecompanion' }
-
-          if vim.bo.filetype == 'lua' then
-            table.insert(sources, 1, 'lazydev')
-          end
+          local default_sources = { 'lsp', 'path', 'snippets', 'buffer' }
 
           -- Remove LSP sources when editing comments.
           -- Since some langauges have multiple comment types (and "comment_content" is its own node),
           -- simply checking if the node type has the word "comment" works better for me.
           local success, node = pcall(vim.treesitter.get_node)
           if success and node and node:type():find 'comment' then
-            sources = { 'path', 'snippets', 'buffer' }
+            default_sources = { 'path', 'snippets', 'buffer' }
+          end
+
+          -- effectively a set, see: https://www.lua.org/pil/11.5.html
+          local source_to_ft = {
+            dadbod = { sql = true, mysql = true, plsql = true },
+            codecompanion = { codecompanion = true },
+            lazydev = { lua = true },
+            markdown = { codecompanion = true, markdown = true, quarto = true, rust = true },
+            obsidian = { markdown = true },
+            obsidian_new = { markdown = true },
+            obsidian_tags = { markdown = true },
+          }
+
+          local sources = default_sources
+          for src, fts in pairs(source_to_ft) do
+            if fts[vim.bo.filetype] then
+              vim.list_extend(sources, { src })
+            end
           end
 
           return sources
@@ -94,7 +107,11 @@ return {
             -- make lazydev completions top priority (see `:h blink.cmp`)
             score_offset = 100,
           },
-          markdown = { name = 'RenderMarkdown', module = 'render-markdown.integ.blink', fallbacks = { 'lsp' } },
+          markdown = {
+            name = 'RenderMarkdown',
+            module = 'render-markdown.integ.blink',
+            fallbacks = { 'lsp' },
+          },
           obsidian = {
             name = 'obsidian',
             module = 'blink.compat.source',

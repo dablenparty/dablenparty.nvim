@@ -14,8 +14,8 @@ return {
     -- ui handled by render-markdown
     ui = { enable = false },
     completion = {
-      -- NOTE: this must be disabled here to enable blink.compat
-      nvim_cmp = false,
+      -- NOTE: https://github.com/epwalsh/obsidian.nvim/issues/770#issuecomment-2564121989
+      nvim_cmp = true,
     },
     workspaces = {
       -- my default vault location
