@@ -24,7 +24,7 @@ yay -S neovim-git
 
 ## Install External Dependencies
 
-> **IMPORTANT!!**
+> [!IMPORTANT]
 > Before you install anything, make sure you have a [Nerd Font](https://www.nerdfonts.com/). At the time of writing, I use [JetBrains Mono](https://www.programmingfonts.org/#jetbrainsmono).
 
 ### Package Managers
