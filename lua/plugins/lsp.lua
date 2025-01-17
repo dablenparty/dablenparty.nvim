@@ -218,8 +218,10 @@ return {
   -- Flutter & Dart
   {
     'nvim-flutter/flutter-tools.nvim',
-    lazy = false,
     dependencies = { 'nvim-lua/plenary.nvim' },
+    -- only load in flutter/dart projects
+    ft = { 'dart' },
+    event = 'BufReadPre *pubspec.yaml',
     opts = {
       decorations = {
         device = true,
