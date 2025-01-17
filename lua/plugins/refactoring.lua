@@ -6,7 +6,6 @@ return {
   },
   -- this plugin has a heavy startup
   lazy = true,
-  event = 'LspAttach',
   -- It supports more, but these are the ones I use
   ft = {
     'typescript',
@@ -23,7 +22,9 @@ return {
   config = function()
     require('telescope').load_extension 'refactoring'
 
-    -- TODO: change to keys map?
+    -- NOTE: do not replace this with a `keys` table in the plugin spec
+    -- I only want it enabled for certain filetypes
+
     vim.keymap.set('x', '<leader>rf', function()
       require('refactoring').refactor 'Extract Function'
     end, { desc = 'Extract [F]unction' })
