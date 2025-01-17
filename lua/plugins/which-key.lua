@@ -4,6 +4,13 @@ return {
   event = 'VimEnter',
   keys = {
     {
+      'g?',
+      function()
+        require('which-key').show { global = true }
+      end,
+      desc = 'Buffer [G]lobal Keymaps (which-key)',
+    },
+    {
       '<leader>?',
       function()
         require('which-key').show { global = false }
