@@ -50,11 +50,11 @@ return {
     },
   },
   keys = {
-    { '<C-a>', '<cmd>CodeCompanionActions<cr>', mode = 'n', { noremap = true, silent = true } },
-    { '<C-a>', '<cmd>CodeCompanionActions<cr>', mode = 'v', { noremap = true, silent = true } },
-    { '<LocalLeader>a', '<cmd>CodeCompanionChat Toggle<cr>', mode = 'n', { noremap = true, silent = true } },
-    { '<LocalLeader>a', '<cmd>CodeCompanionChat Toggle<cr>', mode = 'v', { noremap = true, silent = true } },
-    { 'ga', '<cmd>CodeCompanionChat Add<cr>', mode = 'v', { noremap = true, silent = true } },
+    { '<C-a>', '<cmd>CodeCompanionActions<cr>', mode = 'n', noremap = true, silent = true },
+    { '<C-a>', '<cmd>CodeCompanionActions<cr>', mode = 'v', noremap = true, silent = true },
+    { '<LocalLeader>a', '<cmd>CodeCompanionChat Toggle<cr>', mode = 'n', noremap = true, silent = true },
+    { '<LocalLeader>a', '<cmd>CodeCompanionChat Toggle<cr>', mode = 'v', noremap = true, silent = true },
+    { 'ga', '<cmd>CodeCompanionChat Add<cr>', mode = 'v', noremap = true, silent = true, desc = 'Add to CodeCompanion' },
   },
   cmd = { 'CodeCompanion', 'CodeCompanionChat', 'CodeCompanionActions', 'CodeCompanionCmd' },
   config = function(_, opts)
