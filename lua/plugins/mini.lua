@@ -1,11 +1,26 @@
+-- Using a higher value for n_lines helps catch multi-line text objects easier
+local n_lines = 500
+
 return {
-  -- better [a]round and [i]nside text objects
   {
+    -- Better [a]round and [i]nside text objects
+    -- Main textobject prefixes
+    -- around = 'a',
+    -- inside = 'i',
+    --
+    -- Next/last variants
+    -- around_next = 'an',
+    -- inside_next = 'in',
+    -- around_last = 'al',
+    -- inside_last = 'il',
+    --
+    -- Move cursor to corresponding edge of `a` textobject
+    -- goto_left = 'g[',
+    -- goto_right = 'g]',
     'echasnovski/mini.ai',
-    version = '*',
     event = 'VeryLazy',
     opts = {
-      n_lines = 500,
+      n_lines = n_lines,
     },
   },
   {
@@ -20,18 +35,34 @@ return {
     },
   },
   {
+    -- Better [s]urround actions
+    -- add = 'sa', -- Add surrounding in Normal and Visual modes
+    -- delete = 'sd', -- Delete surrounding
+    -- find = 'sf', -- Find surrounding (to the right)
+    -- find_left = 'sF', -- Find surrounding (to the left)
+    -- highlight = 'sh', -- Highlight surrounding
+    -- replace = 'sr', -- Replace surrounding
+    -- update_n_lines = 'sn', -- Update `n_lines`
+    --
+    -- suffix_last = 'l', -- Suffix to search with "prev" method
+    -- suffix_next = 'n', -- Suffix to search with "next" method
     'echasnovski/mini.surround',
-    version = '*',
     event = 'VeryLazy',
-    opts = {},
+    opts = {
+      n_lines = n_lines,
+      respect_selection_type = true,
+      search_method = 'cover_or_nearest',
+    },
   },
   {
     'echasnovski/mini.statusline',
-    version = '*',
-    config = function()
-      require('mini.statusline').setup {
-        use_icons = vim.g.have_nerd_font,
-      }
+    opts = {
+      use_icons = vim.g.have_nerd_font,
+    },
+    config = function(_, opts)
+      opts = opts or {}
+      require('mini.statusline').setup(opts)
+
       -- You can configure sections in the statusline by overriding their
       -- default behavior. For example, here we set the section for
       -- cursor location to LINE:COLUMN
