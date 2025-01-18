@@ -106,6 +106,9 @@ return {
       search_method = 'cover_or_nearest',
     },
   },
+  -- Highlights trailing whitespace.
+  -- Some LSP's (like luals) handle this already.
+  { 'echasnovski/mini.trailspace', opts = {} },
   {
     'echasnovski/mini.statusline',
     opts = {
