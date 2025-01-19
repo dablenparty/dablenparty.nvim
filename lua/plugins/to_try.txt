@@ -1,4 +1,0 @@
-doing.nvim
-flash.nvim
-nvim-hlslens
-colorful-menu.nvim
