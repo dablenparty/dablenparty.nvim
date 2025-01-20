@@ -14,7 +14,7 @@ return {
         end
 
         set_key('<leader>ca', '<cmd>RustLsp codeAction<CR>', '[C]ode [A]ction')
-        set_key('K', '<cmd>RustLsp hover actions', 'Hover Menu')
+        set_key('K', '<cmd>RustLsp hover actions<CR>', 'Hover Menu')
       end,
     })
   end,
