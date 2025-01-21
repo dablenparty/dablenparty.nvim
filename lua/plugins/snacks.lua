@@ -4,13 +4,16 @@ return {
   lazy = false,
   opts = {
     bigfile = { enabled = true },
+    -- better vim.ui.input
     input = { enabled = true },
     lazygit = { enabled = true },
+    -- better vim.notify
     notifier = { enabled = true },
+    -- render file asap before plugins
     quickfile = { enabled = true },
+    -- LSP-integrated renaming with mini.files support (see that file)
     rename = { enabled = true },
     statuscolumn = { enabled = true },
-    words = { enabled = true },
     styles = {
       notification = {
         wo = { wrap = true }, -- Wrap notifications
