@@ -272,6 +272,8 @@ return {
         }
       end,
       formatters_by_ft = {
+        json = { 'jq' },
+        jsonc = { 'jq' },
         lua = { 'stylua' },
         markdown = { 'prettier', 'markdownlint-cli2', 'markdown-toc' },
         ['markdown.mdx'] = { 'prettier', 'markdownlint-cli2', 'markdown-toc' },
