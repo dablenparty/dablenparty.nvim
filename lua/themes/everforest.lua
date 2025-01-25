@@ -7,7 +7,8 @@ return {
     local opts = {
       enable_italic = true,
       background = 'hard',
-      transparent_background = vim.uv.os_uname().sysname == 'Darwin',
+      -- not sure if this works on Windows, so disable it there
+      transparent_background = not vim.uv.os_uname().version:match 'Windows',
       float_style = 'dim',
       diagnostic_text_highlight = 1,
       diagnostic_virtual_text = 'highlight',
