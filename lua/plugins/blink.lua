@@ -83,7 +83,6 @@ return {
             dadbod = { sql = true, mysql = true, plsql = true },
             codecompanion = { codecompanion = true },
             lazydev = { lua = true },
-            markdown = { codecompanion = true, markdown = true, quarto = true, rust = true },
             obsidian = { markdown = true },
             obsidian_new = { markdown = true },
             obsidian_tags = { markdown = true },
@@ -106,11 +105,6 @@ return {
             module = 'lazydev.integrations.blink',
             -- make lazydev completions top priority (see `:h blink.cmp`)
             score_offset = 100,
-          },
-          markdown = {
-            name = 'RenderMarkdown',
-            module = 'render-markdown.integ.blink',
-            fallbacks = { 'lsp' },
           },
           obsidian = {
             name = 'obsidian',
