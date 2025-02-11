@@ -6,4 +6,5 @@ nvim
 spell/
 **/*.env
 
+.unboxrc.ron
 lazy-lock.json
