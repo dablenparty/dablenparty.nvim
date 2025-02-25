@@ -47,7 +47,7 @@ return {
       },
     },
 
-    build = 'cargo +nightly build --release',
+    build = 'rustup run nightly cargo build --release',
 
     event = { 'InsertEnter', 'LspAttach' },
     lazy = true,
